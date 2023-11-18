@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.ViewBinding
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -33,10 +35,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures{
+      viewBinding= true
 }
-val nav_version = "2.7.5"
-dependencies {
 
+
+}
+
+dependencies {
+    val nav_version = "2.7.5"
+    val  lifecycle_version = "2.4.0-rc01"
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
@@ -57,4 +65,8 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.3.0")
     //glide
     implementation ("com.github.bumptech.glide:glide:4.12.0")
+    //videoModel mvvm
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation ("android.arch.lifecycle:extensions:1.1.0")
 }
