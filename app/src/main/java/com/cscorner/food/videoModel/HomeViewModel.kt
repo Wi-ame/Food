@@ -10,7 +10,6 @@ import com.cscorner.food.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 class HomeViewModel() : ViewModel(){
     private var RandomMealLiveData = MutableLiveData<Meal>()
     fun getRandomMeal(){
