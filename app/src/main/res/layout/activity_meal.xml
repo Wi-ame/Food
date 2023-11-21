@@ -36,6 +36,7 @@
 </com.google.android.material.appbar.AppBarLayout>
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/btn_add_tofavorites"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:src="@drawable/ic_favorites"
@@ -63,6 +64,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <TextView
+            android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
           android:text="Categorie :Beef"
@@ -72,6 +74,7 @@
           android:drawableTint="@color/g_black"
           android:layout_weight="1"/>
         <TextView
+            android:id="@+id/tv_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Area :Palestine"
@@ -97,6 +100,7 @@
           android:fontFamily="@font/myfont"
           android:textSize="@dimen/_15ssp"/>
       <TextView
+          android:id="@+id/tv_instructions_steps"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           app:layout_constraintStart_toStartOf="@id/tv_instruction"
@@ -114,5 +118,14 @@
     android:layout_gravity="bottom|center"
     android:src="@drawable/ic_youtube"
     android:layout_marginBottom="@dimen/_10sdp"/>
+  <com.google.android.material.progressindicator.LinearProgressIndicator
+    android:id="@+id/progress_bar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+    android:indeterminate="true"
+    app:layout_anchor="@id/appbar"
+    app:layout_anchorGravity="bottom"
+    android:visibility="gone"/>
+
 
   </androidx.coordinatorlayout.widget.CoordinatorLayout>
