@@ -1,6 +1,7 @@
 package com.cscorner.food
 
 import android.annotation.SuppressLint
+import android.content.Intent
 
 import android.os.Bundle
 import android.util.Log
@@ -48,7 +49,16 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         homeMvvm.getRandomMeal()
         observeRandomMeal()
+        onRandomMealClick()
     }
+    private fun onRandomMealClick(){
+        binding.randomMealCard.setOnClickListener{
+            val intent = Intent(activity,MealActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+
 
     private fun observeRandomMeal() {
        homeMvvm.observeRandomMealLiveData().observe(viewLifecycleOwner,object :Observer<Meal>{
