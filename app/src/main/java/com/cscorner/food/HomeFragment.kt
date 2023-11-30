@@ -39,8 +39,6 @@ class HomeFragment : Fragment() {
         const val MEAL_ID="com.cscorner.food.idMeal"
         const val MEAL_Name="com.cscorner.food.nameMeal"
         const val MEAL_THUMB="com.cscorner.food.thumbMeal"
-
-
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -72,7 +70,7 @@ class HomeFragment : Fragment() {
 
     private fun onPopularItemClick() {
        popularItemsAdapters.onItemClick={ meal->
-           val intent =Intent(activity,Meal::class.java)
+           val intent =Intent(activity,MealActivity::class.java)
            intent.putExtra(MEAL_ID,meal.idMeal)
            intent.putExtra(MEAL_Name,meal.strMeal)
            intent.putExtra(MEAL_THUMB,meal.strMealThumb)
