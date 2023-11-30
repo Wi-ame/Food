@@ -13,7 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
 <LinearLayout
     android:id="@+id/linear_header"
     android:layout_width="match_parent"
@@ -42,7 +41,7 @@
         android:src="@drawable/ic_search"/>
 
 </LinearLayout>
-    
+
     <TextView
         android:id="@+id/tv_would_like_to_eat"
         android:layout_width="wrap_content"
