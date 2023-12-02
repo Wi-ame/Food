@@ -2,9 +2,7 @@ package com.cscorner.food
 
 import android.annotation.SuppressLint
 import android.content.Intent
-
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +36,8 @@ class HomeFragment : Fragment() {
         const val MEAL_ID="com.cscorner.food.idMeal"
         const val MEAL_Name="com.cscorner.food.nameMeal"
         const val MEAL_THUMB="com.cscorner.food.thumbMeal"
+        const val CATEGORY_NAME ="com.cscorner.food.CategoryName"
+
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -68,8 +68,17 @@ class HomeFragment : Fragment() {
         prepareCategoriesRecycleView()
         homeMvvm.getCategories()
         observeCategoriesLiveData()
+        onCategoryClick()
 
 
+    }
+
+    private fun onCategoryClick() {
+      categoriesAdapter.onItemClick={category ->
+          val intent =Intent(activity,CategoryMealsActivity::class.java)
+          intent.putExtra(CATEGORY_NAME,category.strCategory)
+          startActivity(intent)
+      }
     }
 
     private fun prepareCategoriesRecycleView() {
@@ -86,6 +95,7 @@ class HomeFragment : Fragment() {
 
       })
     }
+
 
     private fun onPopularItemClick() {
        popularItemsAdapters.onItemClick={ meal->
