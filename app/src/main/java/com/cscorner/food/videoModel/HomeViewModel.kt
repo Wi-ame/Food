@@ -1,9 +1,11 @@
 package com.cscorner.food.videoModel
 
 import android.util.Log
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cscorner.food.db.MealDataBase
 import com.cscorner.food.pojo.Category
 import com.cscorner.food.pojo.CategoryList
 import com.cscorner.food.pojo.MealsByCategoryList
@@ -14,10 +16,13 @@ import com.cscorner.food.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-class HomeViewModel() : ViewModel(){
+class HomeViewModel(
+    private val mealDataBase: MealDataBase
+) : ViewModel(){
     private var RandomMealLiveData = MutableLiveData<Meal>()
     private var popularItemsLiveData =MutableLiveData<List<MealsByCategory>>()
     private var CategoriesLiveData =MutableLiveData<List<Category>>()
+    private var  favoritesMealsLiveData =mealDataBase.mealDao().getAllMeals()
     fun getRandomMeal(){
         RetrofitInstance.api.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
@@ -75,6 +80,9 @@ class HomeViewModel() : ViewModel(){
     }
     fun observeCategoriesLiveData():LiveData<List<Category>>{
         return CategoriesLiveData
+    }
+    fun  observeFavoritesMealsLiveData():LiveData<List<Meal>>{
+        return favoritesMealsLiveData
     }
 
 

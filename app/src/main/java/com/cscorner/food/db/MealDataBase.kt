@@ -10,7 +10,7 @@ import com.cscorner.food.pojo.Meal
 @Database(entities = [Meal::class],version=1)
 @TypeConverters(MealTypeConvertor::class)
 
- abstract class MealDataBase: RoomDatabase() {
+  abstract class MealDataBase: RoomDatabase() {
   abstract fun  mealDao():MealDAO
   companion object{
    @Volatile
