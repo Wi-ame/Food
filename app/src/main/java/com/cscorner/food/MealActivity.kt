@@ -39,12 +39,12 @@ class MealActivity : AppCompatActivity() {
         setInformationInViews()
         loadingCase()
         mealMvvm.getMealDetail(mealId)
-        observeMealDetailsLiveData()
+        observerMealDetailsLiveData()
         OnYoutubeImageClick()
-        onfavoriteClick()
+        onFavoriteClick()
     }
 
-    private fun onfavoriteClick() {
+    private fun onFavoriteClick() {
         binding.btnAddTofavorites.setOnClickListener {
             mealToSave?.let {
                 try {
@@ -82,8 +82,8 @@ class MealActivity : AppCompatActivity() {
         mealThumb=intent.getStringExtra(HomeFragment.MEAL_THUMB)!!
 
 }
-  private fun   observeMealDetailsLiveData(){
-      mealMvvm.observeMealDetailsLiveData().observe(this,object :Observer<Meal>{
+  private fun   observerMealDetailsLiveData(){
+      mealMvvm.observerMealDetailsLiveData().observe(this,object :Observer<Meal>{
           override fun onChanged(value: Meal) {
               onResponseCase()
               val meal =value

@@ -15,7 +15,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MealViewModel(
-     val mealDataBase:MealDataBase): ViewModel() {
+    private val mealDataBase:MealDataBase
+): ViewModel() {
 
     private var mealDetailsLiveData =MutableLiveData<Meal>()
     fun getMealDetail(id:String){
@@ -24,9 +25,9 @@ class MealViewModel(
               if(response.body()!=null){
                   mealDetailsLiveData.value=response.body()!!.meals[0]
                 }
-                else{
+                else
                     return
-              }
+
             }
 
             override fun onFailure(call: Call<MealList>, t: Throwable) {
@@ -35,7 +36,7 @@ class MealViewModel(
         })
 
     }
-    fun observeMealDetailsLiveData(): LiveData<Meal>{
+    fun observerMealDetailsLiveData(): LiveData<Meal>{
         return mealDetailsLiveData
     }
     fun insertMeal(meal:Meal){

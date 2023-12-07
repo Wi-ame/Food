@@ -17,6 +17,7 @@ interface MealDAO {
         try {
             Log.d(TAG, "Inserting meal: $meal")
 
+
         } catch (e: Exception) {
             Log.e(TAG, "Error inserting meal: ${e.message}")
             throw e
