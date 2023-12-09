@@ -15,7 +15,6 @@ class CategoryMealsAdapter :RecyclerView.Adapter<CategoryMealsAdapter.CategoryMe
         this.mealsList= mealsList as ArrayList<MealsByCategory>
         notifyDataSetChanged()
 
-
     }
     inner class  CategoryMealsViewModel( val binding:MealItemBinding):RecyclerView.ViewHolder(binding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryMealsViewModel {
@@ -25,12 +24,10 @@ class CategoryMealsAdapter :RecyclerView.Adapter<CategoryMealsAdapter.CategoryMe
             )
         )
     }
-
     override fun onBindViewHolder(holder: CategoryMealsViewModel, position: Int) {
         Glide.with(holder.itemView).load(mealsList[position].strMealThumb).into(holder.binding.imgMeal)
         holder.binding.tvMealName.text=mealsList[position].strMeal
     }
-
     override fun getItemCount(): Int {
        return mealsList.size
     }

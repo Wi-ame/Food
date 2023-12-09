@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.livedata.ktx.R
 import androidx.lifecycle.viewModelScope
 import com.cscorner.food.db.MealDataBase
 import com.cscorner.food.pojo.Category
@@ -20,6 +21,8 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Query
+
 class HomeViewModel(
     private val mealDataBase: MealDataBase
 ) : ViewModel(){
@@ -27,6 +30,10 @@ class HomeViewModel(
     private var popularItemsLiveData =MutableLiveData<List<MealsByCategory>>()
     private var CategoriesLiveData =MutableLiveData<List<Category>>()
     private var  favoritesMealsLiveData =mealDataBase.mealDao().getAllMeals()
+    private var searchedMealsLiveData =MutableLiveData<List<Meal>>()
+    init{
+        getRandomMeal()
+    }
     fun getRandomMeal(){
         RetrofitInstance.api.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
@@ -90,6 +97,7 @@ class HomeViewModel(
             }
         }
     }
+
     fun deleteMeal(meal: Meal) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -97,6 +105,22 @@ class HomeViewModel(
             }
         }
     }
+
+    fun searchMeals(searchQuery: String)= RetrofitInstance.api.searchMeals(searchQuery).enqueue(
+        object:Callback<MealList>{
+            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+               val mealsList = response.body()?.meals
+                mealsList?.let {
+                    searchedMealsLiveData.postValue(it)
+                }
+            }
+
+            override fun onFailure(call: Call<MealList>, t: Throwable) {
+                Log.e("HomeViewModel",t.message.toString())
+            }
+        }
+    )
+    fun observeSearchedMealsLiveData(): LiveData<List<Meal>> =searchedMealsLiveData
     fun observeCategoriesLiveData():LiveData<List<Category>>{
         return CategoriesLiveData
     }

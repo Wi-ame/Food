@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -51,7 +52,6 @@ class HomeFragment : Fragment() {
 
 
         preparPopularItemRecycleView()
-        viewModel.getRandomMeal()
         observeRandomMeal()
         onRandomMealClick()
         viewModel.getPopularItems()
@@ -61,10 +61,13 @@ class HomeFragment : Fragment() {
         viewModel.getCategories()
         observeCategoriesLiveData()
         onCategoryClick()
-
-
+        onSearchIconClick()
     }
-
+    private fun onSearchIconClick() {
+      binding.imgSearch.setOnClickListener{
+          findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+      }
+    }
     private fun onCategoryClick() {
       categoriesAdapter.onItemClick={category ->
           val intent =Intent(activity,CategoryMealsActivity::class.java)
@@ -72,7 +75,6 @@ class HomeFragment : Fragment() {
           startActivity(intent)
       }
     }
-
     private fun prepareCategoriesRecycleView() {
      binding.recViewCategories.apply {
          categoriesAdapter=CategoriesAdapter()
@@ -80,15 +82,12 @@ class HomeFragment : Fragment() {
          adapter = categoriesAdapter
      }
     }
-
     private fun observeCategoriesLiveData() {
       viewModel.observeCategoriesLiveData().observe(viewLifecycleOwner , Observer { categories->
           categoriesAdapter.setCategoryList(categories)
 
       })
     }
-
-
     private fun onPopularItemClick() {
        popularItemsAdapters.onItemClick={ meal->
            val intent =Intent(activity,MealActivity::class.java)
@@ -96,10 +95,8 @@ class HomeFragment : Fragment() {
            intent.putExtra(MEAL_Name,meal.strMeal)
            intent.putExtra(MEAL_THUMB,meal.strMealThumb)
            startActivity(intent)
-
        }
     }
-
     private fun preparPopularItemRecycleView() {
         binding.recViewMealsPopular.apply{
             layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
@@ -107,18 +104,15 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun onRandomMealClick(){
         binding.randomMealCard.setOnClickListener{
             val intent = Intent(activity,MealActivity::class.java)
             intent.putExtra(MEAL_ID,randomMeal.idMeal)
             intent.putExtra(MEAL_Name,randomMeal.strMeal)
             intent.putExtra(MEAL_THUMB,randomMeal.strMealThumb)
-
             startActivity(intent)
         }
     }
-
 
 
     private fun observeRandomMeal() {
@@ -129,7 +123,6 @@ class HomeFragment : Fragment() {
                .into(binding.imgRandomMeal)
 
            this.randomMeal = meal
-
        }
     }
      private fun observePopularItemLiveData(){
@@ -138,5 +131,4 @@ class HomeFragment : Fragment() {
              popularItemsAdapters.setMeals(mealslist = mealList as ArrayList<MealsByCategory>)
          }
      }
-
 }

@@ -1,7 +1,6 @@
 package com.cscorner.food
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.cscorner.food.adapters.FavoritesMealsAdapter
+import com.cscorner.food.adapters.MealsAdapter
 import com.cscorner.food.databinding.FragmentFavoritesBinding
 import com.cscorner.food.videoModel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -19,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 class FavoritesFragment() : Fragment() {
     private lateinit var binding :FragmentFavoritesBinding
     private lateinit var viewModel:HomeViewModel
-    private lateinit var favoritesAdapter: FavoritesMealsAdapter
+    private lateinit var favoritesAdapter: MealsAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +65,7 @@ class FavoritesFragment() : Fragment() {
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.tvFavorites)
     }
     private fun prepareRecycleView() {
-        favoritesAdapter = FavoritesMealsAdapter()
+        favoritesAdapter = MealsAdapter()
         binding.tvFavorites.apply {
             layoutManager= GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
             adapter=favoritesAdapter

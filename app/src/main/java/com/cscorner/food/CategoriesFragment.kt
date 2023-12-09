@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.cscorner.food.adapters.CategoriesAdapter
 import com.cscorner.food.databinding.FragmentCategoriesBinding
 import com.cscorner.food.videoModel.HomeViewModel
-
 class CategoriesFragment : Fragment() {
     private lateinit var binding :FragmentCategoriesBinding
     private lateinit var categoriesAdapter: CategoriesAdapter
