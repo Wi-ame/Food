@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.cscorner.food.pojo.Meal
 
-@Database(entities = [Meal::class], version = 1)
+@Database(entities = [Meal::class], version = 1 )
 @TypeConverters(MealTypeConvertor::class)
 abstract class MealDataBase : RoomDatabase() {
     abstract fun mealDao(): MealDAO
@@ -25,6 +26,7 @@ abstract class MealDataBase : RoomDatabase() {
                     name = "meal.db"
                 )
                     .fallbackToDestructiveMigration()
+
                     .build()
             }
             return INSTANCE as MealDataBase

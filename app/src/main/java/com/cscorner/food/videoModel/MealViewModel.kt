@@ -9,44 +9,40 @@ import com.cscorner.food.db.MealDataBase
 import com.cscorner.food.pojo.Meal
 import com.cscorner.food.pojo.MealList
 import com.cscorner.food.retrofit.RetrofitInstance
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MealViewModel(
-    private val mealDataBase:MealDataBase
-): ViewModel() {
-
-    private var mealDetailsLiveData =MutableLiveData<Meal>()
-    fun getMealDetail(id:String){
-        RetrofitInstance.api.getMealDetails(id).enqueue(object : Callback<MealList>{
+    private val mealDataBase: MealDataBase
+) : ViewModel() {
+    private var mealDetailsLiveData = MutableLiveData<Meal>()
+    fun getMealDetail(id: String) {
+        RetrofitInstance.api.getMealDetails(id).enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
-              if(response.body()!=null){
-                  mealDetailsLiveData.value=response.body()!!.meals[0]
+                    val meals = response.body()?.meals
+                    if (meals != null ) {
+                        mealDetailsLiveData.value =response.body()!!.meals[0]
+                    } else
+                        return
                 }
-                else
-                    return
-
-            }
-
             override fun onFailure(call: Call<MealList>, t: Throwable) {
-                Log.d("MealActivty", t.message.toString())
+                Log.e("MealActivty", "API call failed: ${t.message}")
             }
         })
-
     }
-    fun observerMealDetailsLiveData(): LiveData<Meal>{
+    fun observeMealDetailsLiveData(): LiveData<Meal> {
         return mealDetailsLiveData
     }
-    fun insertMeal(meal:Meal){
+    fun insertMeal(meal: Meal) {
         viewModelScope.launch {
-            mealDataBase.mealDao().upsert(meal)
+            withContext(Dispatchers.IO) {
+                mealDataBase.mealDao().insertOrUpdate(meal)
+            }
         }
     }
-    fun  deleteMeal(meal:Meal){
-        viewModelScope.launch {
-            mealDataBase.mealDao().delete(meal)
-        }
-    }
+
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.cscorner.food.db.MealDataBase
 import com.cscorner.food.pojo.Category
 import com.cscorner.food.pojo.CategoryList
@@ -13,6 +14,9 @@ import com.cscorner.food.pojo.MealsByCategory
 import com.cscorner.food.pojo.Meal
 import com.cscorner.food.pojo.MealList
 import com.cscorner.food.retrofit.RetrofitInstance
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -77,6 +81,21 @@ class HomeViewModel(
 
             }
         })
+    }
+
+    fun insertMeal(meal: Meal) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                mealDataBase.mealDao().insertOrUpdate(meal)
+            }
+        }
+    }
+    fun deleteMeal(meal: Meal) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                mealDataBase.mealDao().delete(meal)
+            }
+        }
     }
     fun observeCategoriesLiveData():LiveData<List<Category>>{
         return CategoriesLiveData

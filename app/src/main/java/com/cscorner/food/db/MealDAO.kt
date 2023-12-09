@@ -7,35 +7,21 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.cscorner.food.pojo.Meal
 
 @Dao
 interface MealDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-     suspend fun upsert(meal: Meal) {
-        try {
-            Log.d(TAG, "Inserting meal: $meal")
+    fun insertOrUpdate(meal: Meal)
 
-
-        } catch (e: Exception) {
-            Log.e(TAG, "Error inserting meal: ${e.message}")
-            throw e
-        }
-    }
     @Delete
-     suspend fun delete(meal: Meal) {
-        try {
-            Log.d(TAG, "Deleting meal: $meal")
-        } catch (e: Exception) {
-            Log.e(TAG, "Error deleting meal: ${e.message}")
-            throw e
-        }
-    }
+     fun delete(meal: Meal)
+
     @Query("SELECT * FROM mealInformation")
     fun getAllMeals(): LiveData<List<Meal>>
 
-    companion object {
-        private const val TAG = "MealDAO"
-    }
+
+
 }

@@ -30,9 +30,7 @@ class HomeFragment : Fragment() {
         const val MEAL_Name="com.cscorner.food.nameMeal"
         const val MEAL_THUMB="com.cscorner.food.thumbMeal"
         const val CATEGORY_NAME ="com.cscorner.food.CategoryName"
-
     }
-
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +48,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         preparPopularItemRecycleView()
         viewModel.getRandomMeal()
